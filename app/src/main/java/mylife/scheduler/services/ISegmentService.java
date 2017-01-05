@@ -3,6 +3,7 @@ package mylife.scheduler.services;
 import java.util.Date;
 import java.util.List;
 
+import mylife.scheduler.model.Segment;
 import mylife.scheduler.model.TimeSegment;
 
 /**
@@ -10,5 +11,6 @@ import mylife.scheduler.model.TimeSegment;
  */
 
 public interface ISegmentService {
-    public List<TimeSegment> getTimeSegementsForTime(Date startTime, Date endTime);
+    public List<TimeSegment> getTimeSegmentsForTimeDifference(Date startTime, Date endTime);
+    public void sortSegmentsByPriority(List<Segment> segments);
 }

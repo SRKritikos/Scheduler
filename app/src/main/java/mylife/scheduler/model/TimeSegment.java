@@ -1,5 +1,6 @@
 package mylife.scheduler.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class TimeSegment {
     public TimeSegment(Date startTime, Date endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.segmentList = new ArrayList<>();
     }
 
     public TimeSegment(Date startTime, Date endTime, List<Segment> segmentList) {
