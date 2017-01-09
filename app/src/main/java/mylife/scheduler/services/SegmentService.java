@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import mylife.scheduler.apiclient.ISegmentClient;
 import mylife.scheduler.apiclient.SegmentClient;
@@ -57,6 +58,7 @@ public class SegmentService implements ISegmentService{
         return timeSegment;
     }
 
+    @Override
     public void sortSegmentsByPriority(List<Segment> segments) {
         Collections.sort(segments, new Comparator<Segment>() {
             @Override
@@ -70,5 +72,14 @@ public class SegmentService implements ISegmentService{
             }
         });
     }
-    
+
+
+    @Override
+    public boolean addNewSegment(Date startTime, Date endTime, String title, String description, int priority) {
+        boolean result;
+        String segmentId = UUID.randomUUID().toString();
+        Segment newSegment = new Segment(startTime, endTime, title, description, segmentId, priority);
+        result = this.segmentJsonDAO.addSegment(newSegment);
+        return result;
+    }
 }

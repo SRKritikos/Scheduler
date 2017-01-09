@@ -5,8 +5,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,12 +21,10 @@ public class SegmentJsonDAO implements ISegmentJsonDAO {
     private final String FILE_NAME = "timesegments.json";
     //TODO: Implement proper logging for try catches.
     FileOutputStream fileOutputStream;
-    File file;
-    Reader reader;
+    FileReader reader;
 
-    public SegmentJsonDAO(FileOutputStream fileOutputStream, File file, Reader reader) {
+    public SegmentJsonDAO(FileOutputStream fileOutputStream, FileReader reader) {
         this.fileOutputStream = fileOutputStream;
-        this.file = file;
         this.reader = reader;
     }
 
@@ -35,7 +33,6 @@ public class SegmentJsonDAO implements ISegmentJsonDAO {
         Gson gson = new Gson();
         String jsonTimeSegmentList = gson.toJson(segments);
         try {
-            fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(jsonTimeSegmentList.getBytes());
             return true;
         } catch (IOException e) {

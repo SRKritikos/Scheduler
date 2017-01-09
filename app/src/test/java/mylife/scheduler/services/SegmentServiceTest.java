@@ -2,6 +2,7 @@ package mylife.scheduler.services;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 import mylife.scheduler.apiclient.ISegmentClient;
+import mylife.scheduler.apiclient.SegmentClient;
+import mylife.scheduler.data.SegmentJsonDAO;
 import mylife.scheduler.model.Segment;
 import mylife.scheduler.model.TimeSegment;
 
@@ -22,15 +25,16 @@ import static junit.framework.Assert.assertTrue;
 
 public class SegmentServiceTest {
     private SegmentService instance;
-    private ISegmentClient segmentsClient;
-
+    private SegmentClient segmentsClient;
+    private SegmentJsonDAO segmentJsonDAO;
     @Before
     public void setUp() {
-        this.segmentsClient = Mockito.mock(ISegmentClient.class);
-        this.instance = new SegmentService(segmentsClient);
+        this.segmentJsonDAO =  Mockito.mock(SegmentJsonDAO.class);
+        this.segmentsClient = Mockito.mock(SegmentClient.class);
+        this.instance = new SegmentService(segmentsClient, segmentJsonDAO);
     }
 
-    private void setUpSegmentsDB() {
+    private List<Segment> setUpSegmentsDB() {
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         startDate.setTime(new Date());
@@ -46,14 +50,26 @@ public class SegmentServiceTest {
         startDate.add(Calendar.HOUR, 1);
         endDate.add(Calendar.HOUR, 1);
         Segment segment4 = new Segment(startDate.getTime(), endDate.getTime(), "Title4", "Description4", "4", 1);
-        List<Segment> result = Arrays.asList(segment1, segment2, segment3, segment4);
-        Mockito.when(this.segmentsClient.getSegmentByTimePeriod(Mockito.anyLong(), Mockito.anyLong())).thenReturn(result);
+        List<Segment> segmentList = Arrays.asList(segment1, segment2, segment3, segment4);
+        return segmentList;
     }
     @Test
-    public void itGetsTimeSegments() {
-        this.setUpSegmentsDB();
+    public void itGetsTimeSegmentsFromClient() {
+        List<Segment> expectedResult = this.setUpSegmentsDB();
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, 1);
+        Mockito.when(this.segmentsClient.getSegmentByTimePeriod(Mockito.anyLong(), Mockito.anyLong())).thenReturn(expectedResult);
+        List<TimeSegment> result = this.instance.getTimeSegmentsForTimeDifference(new Date(), cal.getTime());
+        assertTrue(result.size() > 0);
+    }
+
+    @Test
+    public void itGetTimeSegmentsFromJsonFile(){
+        List<Segment> expectedResult = this.setUpSegmentsDB();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        Mockito.when(this.segmentsClient.getSegmentByTimePeriod(Mockito.anyLong(), Mockito.anyLong())).thenReturn(null);
+        Mockito.when(this.segmentJsonDAO.getSegmentsForTimePeriod(Mockito.anyLong(), Mockito.anyLong())).thenReturn(expectedResult);
         List<TimeSegment> result = this.instance.getTimeSegmentsForTimeDifference(new Date(), cal.getTime());
         assertTrue(result.size() > 0);
     }
@@ -78,4 +94,12 @@ public class SegmentServiceTest {
         this.instance.sortSegmentsByPriority(result);
         assertTrue(result.get(0).getPriority() < result.get(1).getPriority());
     }
+
+    @Test
+    public void itCreatedANewSegment() {
+        Mockito.when(this.segmentJsonDAO.addSegment(Matchers.any(Segment.class))).thenReturn(Boolean.TRUE);
+        boolean result = this.instance.addNewSegment(new Date(), new Date(), "title", "description", 1);
+        assertTrue(result);
+    }
+
 }
