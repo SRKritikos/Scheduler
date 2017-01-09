@@ -18,7 +18,6 @@ import mylife.scheduler.model.Segment;
  */
 
 public class SegmentJsonDAO implements ISegmentJsonDAO {
-    private final String FILE_NAME = "timesegments.json";
     //TODO: Implement proper logging for try catches.
     FileOutputStream fileOutputStream;
     FileReader reader;
