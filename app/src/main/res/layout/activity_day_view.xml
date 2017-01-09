@@ -11,7 +11,7 @@
     tools:context="mylife.scheduler.DayView">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rt_day_view"
+        android:id="@+id/rv_day_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"

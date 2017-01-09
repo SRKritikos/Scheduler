@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import mylife.scheduler.apiclient.ISegmentClient;
+import mylife.scheduler.apiclient.SegmentClient;
+import mylife.scheduler.data.SegmentJsonDAO;
 import mylife.scheduler.model.Segment;
 import mylife.scheduler.model.TimeSegment;
 
@@ -17,10 +19,11 @@ import mylife.scheduler.model.TimeSegment;
  */
 
 public class SegmentService implements ISegmentService{
-    private ISegmentClient segmentClient;
-
-    public SegmentService(ISegmentClient segmentClient) {
+    private SegmentClient segmentClient;
+    private SegmentJsonDAO segmentJsonDAO;
+    public SegmentService(SegmentClient segmentClient, SegmentJsonDAO segmentJsonDAO) {
         this.segmentClient = segmentClient;
+        this.segmentJsonDAO = segmentJsonDAO;
     }
 
     @Override
@@ -29,6 +32,9 @@ public class SegmentService implements ISegmentService{
         DateTime startDateTime = new DateTime(startTime);
         DateTime endDateTime = new DateTime(endTime);
         List<Segment> segmentList = this.segmentClient.getSegmentByTimePeriod(startTime.getTime(), endTime.getTime());
+        if (segmentList == null) {
+            segmentList = this.segmentJsonDAO.getSegmentsForTimePeriod(startTime.getTime(), endTime.getTime());
+        }
         startDateTime = startDateTime.hourOfDay().roundFloorCopy();
         endDateTime = endDateTime.hourOfDay().roundCeilingCopy();
         while (startDateTime.isBefore(endDateTime)) {
@@ -64,4 +70,5 @@ public class SegmentService implements ISegmentService{
             }
         });
     }
+    
 }

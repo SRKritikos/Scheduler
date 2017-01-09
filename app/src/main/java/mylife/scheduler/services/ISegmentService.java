@@ -11,6 +11,6 @@ import mylife.scheduler.model.TimeSegment;
  */
 
 public interface ISegmentService {
-    public List<TimeSegment> getTimeSegmentsForTimeDifference(Date startTime, Date endTime);
-    public void sortSegmentsByPriority(List<Segment> segments);
+    List<TimeSegment> getTimeSegmentsForTimeDifference(Date startTime, Date endTime);
+    void sortSegmentsByPriority(List<Segment> segments);
 }
