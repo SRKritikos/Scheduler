@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Scheduler</string>
+    <string name="add_button_text">ADD</string>
 </resources>

@@ -3,20 +3,20 @@
     package="mylife.scheduler">
 
     <application
+        android:name=".SchedulerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".SchedulerApplication">
-        <activity android:name=".CalendarView">
-
+        android:theme="@style/AppTheme">
+        <activity android:name=".CalendarView"></activity>
+        <activity android:name=".DayView">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".DayView"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        <activity android:name=".AddSegmentView"
+            android:parentActivityName=".DayView"></activity>
     </application>
-
 </manifest>
