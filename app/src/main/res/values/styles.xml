@@ -7,5 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="repeatRadioButton">
+        <item name="android:enabled">false</item>
+    </style>
 
 </resources>

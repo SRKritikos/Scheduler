@@ -1,7 +1,9 @@
 package mylife.scheduler;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import javax.inject.Inject;
 
@@ -25,5 +27,11 @@ public class DayView extends AppCompatActivity {
         } else {
             System.out.println("INJECTION WORKED");
         }
+    }
+
+
+    public void addSegmentClick(View view) {
+        Intent intent = new Intent(this, AddSegmentView.class);
+        this.startActivity(intent);
     }
 }

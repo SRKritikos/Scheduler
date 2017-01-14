@@ -75,7 +75,7 @@ public class SegmentService implements ISegmentService{
 
 
     @Override
-    public boolean addNewSegment(Date startTime, Date endTime, String title, String description, int priority) {
+    public boolean addNewSegment(Date startTime, Date endTime, String title, String description, int priority, boolean repeat, String repeatType) {
         boolean result;
         String segmentId = UUID.randomUUID().toString();
         Segment newSegment = new Segment(startTime, endTime, title, description, segmentId, priority);

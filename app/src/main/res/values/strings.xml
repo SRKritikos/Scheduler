@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Scheduler</string>
     <string name="add_button_text">ADD</string>
+    <string name="title_label_text">Title</string>
+    <string name="note_label_text">Note</string>
+    <string name="checkbox_label_repeat">Repeat</string>
+    <string name="radio_label_daily">Daily</string>
+    <string name="radio_label_weekly">Weekly</string>
+    <string name="radio_label_monthly">Monthly</string>
 </resources>
