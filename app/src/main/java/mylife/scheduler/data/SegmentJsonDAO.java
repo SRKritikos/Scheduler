@@ -30,18 +30,12 @@ public class SegmentJsonDAO implements ISegmentJsonDAO {
     @Override
     public boolean saveSegments(List<Segment> segments) {
         Gson gson = new Gson();
-        String jsonTimeSegmentList = gson.toJson(segments);
+        String jsonSegmentList = gson.toJson(segments);
         try {
-            fileOutputStream.write(jsonTimeSegmentList.getBytes());
+            fileOutputStream.write(jsonSegmentList.getBytes());
             return true;
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return false;
     }
@@ -51,6 +45,7 @@ public class SegmentJsonDAO implements ISegmentJsonDAO {
         List<Segment> segmentList;
         Gson gson = new Gson();
         segmentList = gson.fromJson(reader, new TypeToken<ArrayList<Segment>>(){}.getType());
+        System.out.println("Segment List value:" + segmentList);
         if (segmentList == null) {
             segmentList =  new ArrayList<>();
         }

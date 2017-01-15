@@ -3,6 +3,7 @@ package mylife.scheduler.modules;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import mylife.scheduler.AddSegmentView;
 import mylife.scheduler.DayView;
 
 /**
@@ -15,4 +16,5 @@ import mylife.scheduler.DayView;
         })
 public interface TimeSegmentComponent {
     void inject(DayView dayView);
+    void inject(AddSegmentView addSegmentView);
 }

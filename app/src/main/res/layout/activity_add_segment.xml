@@ -21,7 +21,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:text=""
         android:ems="10"
         android:layout_alignParentTop="true"
@@ -40,12 +40,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:text=""
         android:ems="10"
         android:layout_below="@+id/txtInTitle"
         android:layout_alignEnd="@+id/txtInTitle"
-        android:id="@+id/txtInDesc"
+        android:id="@+id/txtInNote"
         android:layout_alignBottom="@+id/txtOutDesc" />
 
     <TextView
@@ -62,29 +62,11 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txtStartDate"
-        android:layout_alignEnd="@+id/txtInDesc"
-        android:id="@+id/txtStartTime"
-        android:onClick="startTimeClick"/>
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/txtStartDate"
         android:layout_alignParentStart="true"
         android:layout_marginTop="12dp"
         android:id="@+id/txtEndDate"
         android:onClick="endDateClick"/>
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/txtEndDate"
-        android:layout_alignStart="@+id/txtStartTime"
-        android:id="@+id/txtEndTime"
-        android:onClick="endTimeClick"/>
 
     <CheckBox
         android:text="@string/checkbox_label_repeat"
@@ -123,4 +105,34 @@
             style="@style/repeatRadioButton"
             android:id="@+id/radioRepeatMonthly"/>
     </RadioGroup>
+
+    <Button
+        android:text="@string/save_button_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/button"
+        android:layout_toEndOf="@+id/txtEndTime"
+        android:onClick="saveSegment"/>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtEndTime"
+        android:onClick="endTimeClick"
+        android:layout_above="@+id/checkBox"
+        android:layout_toEndOf="@+id/repeatTypeRadio"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtStartTime"
+        android:onClick="startTimeClick"
+        android:layout_alignBaseline="@+id/txtStartDate"
+        android:layout_alignBottom="@+id/txtStartDate"
+        android:layout_alignStart="@+id/txtEndTime" />
 </RelativeLayout>

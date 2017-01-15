@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +42,7 @@ public class AddSegmentView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_segment);
+        ((SchedulerApplication) getApplication()).getTimeSegmentComponent().inject(this);
         this.startDateView = (TextView) this.findViewById(R.id.txtStartDate);
         this.endDateView = (TextView) this.findViewById(R.id.txtEndDate);
         this.startTimeView = (TextView) this.findViewById(R.id.txtStartTime);
@@ -141,6 +143,13 @@ public class AddSegmentView extends AppCompatActivity {
         new TimePickerDialog(this, time, endTime.get(Calendar.HOUR), endTime.get(Calendar.MINUTE), true).show();
     }
 
+    /**
+     * Handles the checked and unchecked states of the repeat checkbox
+     *
+     * if checked make radio buttons enabled
+     * if unchecked make radio button not enabled
+     * @param view
+     */
     public void repeatChosen(View view) {
         boolean checked = ((CheckBox) view).isChecked();
         this.repeatRadio = (RadioGroup) this.findViewById(R.id.repeatTypeRadio);
@@ -158,17 +167,27 @@ public class AddSegmentView extends AppCompatActivity {
         }
     }
 
+    /**
+     * Save segment to persistent storage.
+     *
+     * Get inputted values from the view and use segment service to persist inputted data.
+     * @param view
+     */
     public void saveSegment(View view) {
         this.repeatRadio = (RadioGroup) this.findViewById(R.id.repeatTypeRadio);
-        int repeatButtonId = this.repeatRadio.getCheckedRadioButtonId();
-        RadioButton repeatRadioButtonClicked = (RadioButton) this.repeatRadio.getChildAt(repeatButtonId);
         EditText editTextTitle = (EditText) this.findViewById(R.id.txtInTitle);
-        EditText editTextNote = (EditText) this.findViewById(R.id.txtInDesc);
+        EditText editTextNote = (EditText) this.findViewById(R.id.txtInNote);
         CheckBox checkBoxRepeat = (CheckBox) this.findViewById(R.id.checkBox);
         String title =  editTextTitle.getText().toString();
         String note = editTextNote.getText().toString();
         boolean repeat = checkBoxRepeat.isEnabled();
-        String repeatType = repeatRadioButtonClicked.getText().toString();
+        String repeatType = "";
+        if (repeat) {
+            int repeatButtonId = this.repeatRadio.getCheckedRadioButtonId();
+            RadioButton repeatRadioButtonClicked = (RadioButton) this.findViewById(repeatButtonId);
+            repeatType = repeatRadioButtonClicked.getText().toString();
+
+        }
         String startDate = this.startDateView.getText().toString();
         String endDate = this.endDateView.getText().toString();
         String startTime = this.startTimeView.getText().toString();
@@ -180,6 +199,7 @@ public class AddSegmentView extends AppCompatActivity {
             this.segmentService.addNewSegment(startDateTime, endDateTime, title, note, 1, repeat, repeatType);
         } catch (ParseException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Failed to create segment", Toast.LENGTH_SHORT).show();
         }
     }
 }
