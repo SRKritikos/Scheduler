@@ -11,18 +11,22 @@
     tools:context="mylife.scheduler.DayView">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_day_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true">
+
+    </android.support.v7.widget.RecyclerView>
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+
         android:gravity="bottom">
         <Button
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             android:id="@+id/addSegmentBtn"
             android:text="@string/add_button_text"
             android:onClick="addSegmentClick" />
