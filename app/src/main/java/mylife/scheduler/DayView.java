@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterViewFlipper;
 
@@ -32,6 +33,7 @@ public class DayView extends AppCompatActivity {
         ((SchedulerApplication) getApplication()).getTimeSegmentComponent().inject(this);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
+        Log.i("DayView", "Calendar date " + calendar.getTime() );
         List<TimeSegment> timeSegmentList = this.segmentService.getTimeSegmentsForTimeDifference(calendar.getTime(), new Date());
         this.dayViewAdapter = new DayViewAdapter(timeSegmentList, this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_day_view);

@@ -52,39 +52,43 @@ public class DayViewAdapter extends RecyclerView.Adapter<DayViewAdapter.ViewHold
         TimeSegment timeSegment = this.timeSegmentList.get(position);
         holder.endTime.setText(timeOutput.format(timeSegment.getEndTime()));
         holder.startTime.setText(timeOutput.format(timeSegment.getStartTime()));
-        if (timeSegment.getSegmentList().isEmpty()) {
-            Segment segment = new Segment(new Date(), new Date(), "title1", "note1", "repeat", 0);
-            Segment segment2 = new Segment(new Date(), new Date(), "title2", "note2", "repeat", 0);
-            List<Segment> segmentList = Arrays.asList(segment, segment2);
-            final AdapterViewFlipper adapterViewFlipper = new AdapterViewFlipper(context);
-            SegmentAdapter segmentAdapter = new SegmentAdapter(segmentList, context);
-            adapterViewFlipper.setAdapter(segmentAdapter);
-            adapterViewFlipper.setOnTouchListener(new SwipeTouchListener(context) {
-                @Override
-                public void onSwipeRight() {
-                    super.onSwipeRight();
-                    adapterViewFlipper.showPrevious();
-                }
+        Log.i("DayViewAdapter", "List Size : " + timeSegment.getSegmentList().size());
+        if ( !timeSegment.getSegmentList().isEmpty() ) {
 
-                @Override
-                public void onSwipeLeft() {
-                    super.onSwipeLeft();
-                    adapterViewFlipper.showNext();
-                }
-
-                @Override
-                public void onSwipeTop() {
-                    super.onSwipeTop();
-                }
-
-                @Override
-                public void onSwipeBottom() {
-                    super.onSwipeBottom();
-                }
-            });
+            List<Segment> segmentList = timeSegment.getSegmentList();
+            AdapterViewFlipper adapterViewFlipper = new AdapterViewFlipper(context);
+            this.attachAdaptedViewFlipper(adapterViewFlipper, segmentList);
             holder.segmentLayout.removeAllViews();
             holder.segmentLayout.addView(adapterViewFlipper);
         }
+    }
+
+    private void attachAdaptedViewFlipper(final AdapterViewFlipper adapterViewFlipper, List<Segment> segmentList) {
+        SegmentAdapter segmentAdapter = new SegmentAdapter(segmentList, context);
+        adapterViewFlipper.setAdapter(segmentAdapter);
+        adapterViewFlipper.setOnTouchListener(new SwipeTouchListener(context) {
+            @Override
+            public void onSwipeRight() {
+                super.onSwipeRight();
+                adapterViewFlipper.showPrevious();
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                super.onSwipeLeft();
+                adapterViewFlipper.showNext();
+            }
+
+            @Override
+            public void onSwipeTop() {
+                super.onSwipeTop();
+            }
+
+            @Override
+            public void onSwipeBottom() {
+                super.onSwipeBottom();
+            }
+        });
     }
 
     @Override

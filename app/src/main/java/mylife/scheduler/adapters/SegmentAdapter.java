@@ -1,6 +1,7 @@
 package mylife.scheduler.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class SegmentAdapter extends BaseAdapter {
     private Context context;
 
     public SegmentAdapter(List<Segment> segmentList, Context context) {
+        Log.i("SegmentAdapter", "List Size : " + segmentList.size());
         this.segmentList = segmentList;
         this.context = context;
     }
@@ -46,6 +48,7 @@ public class SegmentAdapter extends BaseAdapter {
         View segmentView = layoutInflater.inflate(R.layout.segment_layout, null, false);
         TextView titleText = (TextView) segmentView.findViewById(R.id.titleText);
         TextView noteText = (TextView) segmentView.findViewById(R.id.noteText);
+        Log.i("SegmentAdapter", segmentList.get(position).getTitle() + ", " + segmentList.get(position).getDescription());
         titleText.setText(this.segmentList.get(position).getTitle());
         noteText.setText(this.segmentList.get(position).getDescription());
         return segmentView;

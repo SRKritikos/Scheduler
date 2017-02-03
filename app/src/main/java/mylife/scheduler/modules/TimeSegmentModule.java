@@ -1,6 +1,7 @@
 package mylife.scheduler.modules;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import dagger.Module;
 import dagger.Provides;
 import mylife.scheduler.apiclient.SegmentClient;
 import mylife.scheduler.data.SegmentJsonDAO;
+import mylife.scheduler.data.SegmentJsonSharedPrefs;
 import mylife.scheduler.services.SegmentService;
 
 /**
@@ -62,6 +64,18 @@ public class TimeSegmentModule {
 
     @Provides
     @Singleton
+    public SharedPreferences sharedPreferencesComponent() {
+        return context.getSharedPreferences("segments", 0);
+    }
+
+    @Provides
+    @Singleton
+    public SegmentJsonSharedPrefs segmentJsonSharedPrefsComponent(SharedPreferences sharedPreferences) {
+        return new SegmentJsonSharedPrefs(sharedPreferences);
+    }
+
+    @Provides
+    @Singleton
     public FileReader readerComponent(File file) {
         try {
             return new FileReader(file);
@@ -84,8 +98,7 @@ public class TimeSegmentModule {
 
     @Provides
     @Singleton
-    public SegmentService segmentServiceComponent(SegmentClient segmentClient, SegmentJsonDAO segmentJsonDAO) {
+    public SegmentService segmentServiceComponent(SegmentClient segmentClient, SegmentJsonSharedPrefs segmentJsonDAO) {
         return new SegmentService(segmentClient, segmentJsonDAO);
     }
-
 }

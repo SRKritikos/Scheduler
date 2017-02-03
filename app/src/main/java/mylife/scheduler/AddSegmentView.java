@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -186,13 +187,12 @@ public class AddSegmentView extends AppCompatActivity {
             int repeatButtonId = this.repeatRadio.getCheckedRadioButtonId();
             RadioButton repeatRadioButtonClicked = (RadioButton) this.findViewById(repeatButtonId);
             repeatType = repeatRadioButtonClicked.getText().toString();
-
         }
         String startDate = this.startDateView.getText().toString();
         String endDate = this.endDateView.getText().toString();
         String startTime = this.startTimeView.getText().toString();
         String endTime = this.endTimeView.getText().toString();
-        SimpleDateFormat sdfDateTime = new SimpleDateFormat("dd/MM/yyHH:MM");
+        SimpleDateFormat sdfDateTime = new SimpleDateFormat("dd/MM/yyHH:mm");
         try {
             Date startDateTime = sdfDateTime.parse(startDate+startTime);
             Date endDateTime = sdfDateTime.parse(endDate+endTime);

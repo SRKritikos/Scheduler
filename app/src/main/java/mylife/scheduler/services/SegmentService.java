@@ -1,5 +1,7 @@
 package mylife.scheduler.services;
 
+import android.util.Log;
+
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.UUID;
 
 import mylife.scheduler.apiclient.ISegmentClient;
 import mylife.scheduler.apiclient.SegmentClient;
+import mylife.scheduler.data.ISegmentJsonDAO;
 import mylife.scheduler.data.SegmentJsonDAO;
 import mylife.scheduler.model.Segment;
 import mylife.scheduler.model.TimeSegment;
@@ -21,21 +24,27 @@ import mylife.scheduler.model.TimeSegment;
 
 public class SegmentService implements ISegmentService{
     private SegmentClient segmentClient;
-    private SegmentJsonDAO segmentJsonDAO;
-    public SegmentService(SegmentClient segmentClient, SegmentJsonDAO segmentJsonDAO) {
+    private ISegmentJsonDAO segmentJsonDAO;
+    public SegmentService(SegmentClient segmentClient, ISegmentJsonDAO segmentJsonDAO) {
         this.segmentClient = segmentClient;
         this.segmentJsonDAO = segmentJsonDAO;
     }
 
     @Override
     public List<TimeSegment> getTimeSegmentsForTimeDifference(Date startTime, Date endTime) {
-        List<TimeSegment> timeSegmentList = new ArrayList<>();
-        DateTime startDateTime = new DateTime(startTime);
-        DateTime endDateTime = new DateTime(endTime);
         List<Segment> segmentList = this.segmentClient.getSegmentByTimePeriod(startTime.getTime(), endTime.getTime());
         if (segmentList == null) {
             segmentList = this.segmentJsonDAO.getSegmentsForTimePeriod(startTime.getTime(), endTime.getTime());
         }
+        Log.i("SegmentService", "List Size FROM DAO : " + segmentList.size());
+        List<TimeSegment> timeSegmentList = this.createTimeSegmentsForTimePeriod(startTime, endTime, segmentList);
+        return timeSegmentList;
+    }
+
+    private List<TimeSegment> createTimeSegmentsForTimePeriod(Date startTime, Date endTime, List<Segment> segmentList) {
+        List<TimeSegment>  timeSegmentList = new ArrayList<>();
+        DateTime startDateTime = new DateTime(startTime);
+        DateTime endDateTime = new DateTime(endTime);
         startDateTime = startDateTime.hourOfDay().roundFloorCopy();
         endDateTime = endDateTime.hourOfDay().roundCeilingCopy();
         while (startDateTime.isBefore(endDateTime)) {
@@ -47,10 +56,11 @@ public class SegmentService implements ISegmentService{
         return timeSegmentList;
     }
 
-    private TimeSegment createTimeSegment(final DateTime startDateTime, final DateTime nextStartTime, List<Segment> segmentList) {
-        TimeSegment timeSegment = new TimeSegment(startDateTime.toDate(), nextStartTime.toDate());
+    private TimeSegment createTimeSegment(DateTime startDateTime, DateTime endDateTime, List<Segment> segmentList) {
+        TimeSegment timeSegment = new TimeSegment(startDateTime.toDate(), endDateTime.toDate());
         for (Segment segment : segmentList) {
-            if (segment.getStartTime().after(startDateTime.toDate()) && segment.getStartTime().before(nextStartTime.toDate())) {
+            if (startDateTime.toDate().after(segment.getStartTime())
+                    && startDateTime.toDate().before(segment.getEndTime())) {
                 timeSegment.addSegment(segment);
             }
         }

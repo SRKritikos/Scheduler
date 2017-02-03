@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
@@ -25,14 +26,14 @@ import static junit.framework.Assert.assertEquals;
 public class SegmentJsonDAOTest {
     private SegmentJsonDAO instance;
     private FileOutputStream fileOutputStream;
-    private Reader reader;
+    private FileReader reader;
     private File file;
     @Before
     public void setUp() {
         this.fileOutputStream = Mockito.mock(FileOutputStream.class);
         this.file =  Mockito.mock(File.class);
-        this.reader = Mockito.mock(Reader.class);
-        this.instance =  new SegmentJsonDAO(fileOutputStream, file, reader);
+        this.reader = Mockito.mock(FileReader.class);
+        this.instance =  new SegmentJsonDAO(fileOutputStream, reader);
     }
     
 }

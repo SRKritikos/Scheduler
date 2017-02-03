@@ -98,7 +98,7 @@ public class SegmentServiceTest {
     @Test
     public void itCreatedANewSegment() {
         Mockito.when(this.segmentJsonDAO.addSegment(Matchers.any(Segment.class))).thenReturn(Boolean.TRUE);
-        boolean result = this.instance.addNewSegment(new Date(), new Date(), "title", "description", 1);
+        boolean result = this.instance.addNewSegment(new Date(), new Date(), "title", "description", 1, true, "DESERT");
         assertTrue(result);
     }
 
