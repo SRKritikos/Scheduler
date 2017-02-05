@@ -53,13 +53,12 @@ public class DayViewAdapter extends RecyclerView.Adapter<DayViewAdapter.ViewHold
         holder.endTime.setText(timeOutput.format(timeSegment.getEndTime()));
         holder.startTime.setText(timeOutput.format(timeSegment.getStartTime()));
         Log.i("DayViewAdapter", "List Size : " + timeSegment.getSegmentList().size());
-        if ( !timeSegment.getSegmentList().isEmpty() ) {
-            List<Segment> segmentList = timeSegment.getSegmentList();
-            AdapterViewFlipper adapterViewFlipper = new AdapterViewFlipper(context);
-            this.attachAdaptedViewFlipper(adapterViewFlipper, segmentList);
-            holder.segmentLayout.removeAllViews();
-            holder.segmentLayout.addView(adapterViewFlipper);
-        }
+        List<Segment> segmentList = timeSegment.getSegmentList();
+        AdapterViewFlipper adapterViewFlipper = new AdapterViewFlipper(context);
+        this.attachAdaptedViewFlipper(adapterViewFlipper, segmentList);
+        holder.segmentLayout.removeAllViews();
+        holder.segmentLayout.addView(adapterViewFlipper);
+
     }
 
     private void attachAdaptedViewFlipper(final AdapterViewFlipper adapterViewFlipper, List<Segment> segmentList) {

@@ -48,6 +48,7 @@ public class SegmentAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(this.context);
         Segment segment = this.segmentList.get(position);
+        //parent.setBackgroundColor( colors[segment.getPriority()] );
         View segmentView = layoutInflater.inflate(R.layout.segment_layout, parent, false);
         segmentView.setBackgroundColor( colors[segment.getPriority()] );
         TextView titleText = (TextView) segmentView.findViewById(R.id.titleText);

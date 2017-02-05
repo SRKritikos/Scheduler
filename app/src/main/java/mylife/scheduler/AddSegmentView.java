@@ -183,7 +183,7 @@ public class AddSegmentView extends AppCompatActivity {
         CheckBox checkBoxRepeat = (CheckBox) this.findViewById(R.id.checkBox);
         String title =  editTextTitle.getText().toString();
         String note = editTextNote.getText().toString();
-        boolean repeat = checkBoxRepeat.isEnabled();
+        boolean repeat = checkBoxRepeat.isActivated();
         String repeatType = "";
         if (repeat) {
             int repeatButtonId = this.repeatRadio.getCheckedRadioButtonId();
