@@ -106,16 +106,6 @@
             android:id="@+id/radioRepeatMonthly"/>
     </RadioGroup>
 
-    <Button
-        android:text="@string/save_button_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/button"
-        android:layout_toEndOf="@+id/txtEndTime"
-        android:onClick="saveSegment"/>
-
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
@@ -135,4 +125,47 @@
         android:layout_alignBaseline="@+id/txtStartDate"
         android:layout_alignBottom="@+id/txtStartDate"
         android:layout_alignStart="@+id/txtEndTime" />
+
+
+    <Button
+        android:text="@string/save_button_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/button"
+        android:layout_toEndOf="@+id/txtEndTime"
+        android:onClick="saveSegment"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/repeatTypeRadio"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:id="@+id/priorityRadioGroup">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High Priority"
+            android:checked="true"
+            android:id="@+id/highPriorityRadio"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mediumPriorityRadio"
+            android:text="Medium Priority" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lowPriorityRadio"
+            android:text="Low Priority" />
+
+    </RadioGroup>
+
+
 </RelativeLayout>

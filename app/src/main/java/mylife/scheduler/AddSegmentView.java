@@ -2,6 +2,7 @@ package mylife.scheduler;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,8 +36,8 @@ public class AddSegmentView extends AppCompatActivity {
     private TextView endTimeView;
     private RadioGroup repeatRadio;
 
-    private final SimpleDateFormat sdfForDates = new SimpleDateFormat("dd/MM/yy");
-    private final SimpleDateFormat sdfForTimes = new SimpleDateFormat("hh:mm");
+    private final SimpleDateFormat dateFormatterForDates = new SimpleDateFormat("dd/MM/yy");
+    private final SimpleDateFormat dateFormatterForTimes = new SimpleDateFormat("HH:mm");
 
 
     @Override
@@ -44,16 +45,17 @@ public class AddSegmentView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_segment);
         ((SchedulerApplication) getApplication()).getTimeSegmentComponent().inject(this);
+
         this.startDateView = (TextView) this.findViewById(R.id.txtStartDate);
         this.endDateView = (TextView) this.findViewById(R.id.txtEndDate);
         this.startTimeView = (TextView) this.findViewById(R.id.txtStartTime);
         this.endTimeView = (TextView) this.findViewById(R.id.txtEndTime);
         Calendar calendar = Calendar.getInstance();
-        this.startDateView.setText(sdfForDates.format(calendar.getTime()));
-        this.endDateView.setText(sdfForDates.format(calendar.getTime()));
-        this.startTimeView.setText(sdfForTimes.format(calendar.getTime()));
+        this.startDateView.setText( dateFormatterForDates.format(calendar.getTime()) );
+        this.endDateView.setText( dateFormatterForDates.format(calendar.getTime()) );
+        this.startTimeView.setText( dateFormatterForTimes.format(calendar.getTime()) );
         calendar.add(Calendar.HOUR, 1);
-        this.endTimeView.setText(sdfForTimes.format(calendar.getTime()));
+        this.endTimeView.setText( dateFormatterForTimes.format(calendar.getTime()) );
     }
 
     /**
@@ -73,7 +75,7 @@ public class AddSegmentView extends AppCompatActivity {
                 startDate.set(Calendar.YEAR, year);
                 startDate.set(Calendar.MONTH, monthOfYear);
                 startDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                clickedTextView.setText(sdfForDates.format(startDate.getTime()));
+                clickedTextView.setText( dateFormatterForDates.format(startDate.getTime()) );
             }
         };
         new DatePickerDialog(this, date, startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH)).show();
@@ -96,7 +98,7 @@ public class AddSegmentView extends AppCompatActivity {
                 endDate.set(Calendar.YEAR, year);
                 endDate.set(Calendar.MONTH, monthOfYear);
                 endDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                clickedTextView.setText(sdfForDates.format(endDate.getTime()));
+                clickedTextView.setText(dateFormatterForDates.format(endDate.getTime()));
             }
         };
         new DatePickerDialog(this, date, endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH)).show();
@@ -117,10 +119,10 @@ public class AddSegmentView extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 startTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 startTime.set(Calendar.MINUTE, minute);
-                clickedTextView.setText(sdfForTimes.format(startTime.getTime()));
+                clickedTextView.setText(dateFormatterForTimes.format(startTime.getTime()));
             }
         };
-        new TimePickerDialog(this, time, startTime.get(Calendar.HOUR), startTime.get(Calendar.MINUTE), true).show();
+        new TimePickerDialog(this, time, startTime.get(Calendar.HOUR_OF_DAY), startTime.get(Calendar.MINUTE), true).show();
     }
 
     /**
@@ -138,7 +140,7 @@ public class AddSegmentView extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 endTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 endTime.set(Calendar.MINUTE, minute);
-                clickedTextView.setText(sdfForTimes.format(endTime.getTime()));
+                clickedTextView.setText( dateFormatterForTimes.format(endTime.getTime()) );
             }
         };
         new TimePickerDialog(this, time, endTime.get(Calendar.HOUR), endTime.get(Calendar.MINUTE), true).show();
@@ -194,9 +196,14 @@ public class AddSegmentView extends AppCompatActivity {
         String endTime = this.endTimeView.getText().toString();
         SimpleDateFormat sdfDateTime = new SimpleDateFormat("dd/MM/yyHH:mm");
         try {
+            Log.i("AddSegmentView", startDate+startTime);
+            Log.i("AddSegmentView", endDate+endTime);
             Date startDateTime = sdfDateTime.parse(startDate+startTime);
             Date endDateTime = sdfDateTime.parse(endDate+endTime);
             this.segmentService.addNewSegment(startDateTime, endDateTime, title, note, 1, repeat, repeatType);
+//            Intent intent = new Intent(this, DayView.class);
+            this.finish();
+//            this.startActivity(intent);
         } catch (ParseException e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to create segment", Toast.LENGTH_SHORT).show();

@@ -11,7 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import mylife.scheduler.apiclient.ISegmentClient;
 import mylife.scheduler.apiclient.SegmentClient;
 import mylife.scheduler.data.SegmentJsonDAO;
 import mylife.scheduler.model.Segment;
@@ -59,7 +58,7 @@ public class SegmentServiceTest {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, 1);
         Mockito.when(this.segmentsClient.getSegmentByTimePeriod(Mockito.anyLong(), Mockito.anyLong())).thenReturn(expectedResult);
-        List<TimeSegment> result = this.instance.getTimeSegmentsForTimeDifference(new Date(), cal.getTime());
+        List<TimeSegment> result = this.instance.getTimeSegmentsForDateDifference(new Date(), cal.getTime());
         assertTrue(result.size() > 0);
     }
 
@@ -70,7 +69,7 @@ public class SegmentServiceTest {
         cal.add(Calendar.MONTH, 1);
         Mockito.when(this.segmentsClient.getSegmentByTimePeriod(Mockito.anyLong(), Mockito.anyLong())).thenReturn(null);
         Mockito.when(this.segmentJsonDAO.getSegmentsForTimePeriod(Mockito.anyLong(), Mockito.anyLong())).thenReturn(expectedResult);
-        List<TimeSegment> result = this.instance.getTimeSegmentsForTimeDifference(new Date(), cal.getTime());
+        List<TimeSegment> result = this.instance.getTimeSegmentsForDateDifference(new Date(), cal.getTime());
         assertTrue(result.size() > 0);
     }
 
@@ -79,7 +78,7 @@ public class SegmentServiceTest {
         Mockito.when(this.segmentsClient.getSegmentByTimePeriod(Mockito.anyLong(), Mockito.anyLong())).thenReturn(new ArrayList<Segment>());
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, 1);
-        List<TimeSegment> result = this.instance.getTimeSegmentsForTimeDifference(new Date(), cal.getTime());
+        List<TimeSegment> result = this.instance.getTimeSegmentsForDateDifference(new Date(), cal.getTime());
         assertTrue(result.size() > 0);
         for (TimeSegment r : result) {
             assertTrue(r.getSegmentList().isEmpty());

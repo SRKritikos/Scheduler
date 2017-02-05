@@ -10,5 +10,8 @@
     <style name="repeatRadioButton">
         <item name="android:enabled">false</item>
     </style>
+    <style name="segmentLayout">
+        <item name="android:layout_height">150dp</item>
+    </style>
 
 </resources>

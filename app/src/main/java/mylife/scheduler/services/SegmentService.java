@@ -31,13 +31,13 @@ public class SegmentService implements ISegmentService{
     }
 
     @Override
-    public List<TimeSegment> getTimeSegmentsForTimeDifference(Date startTime, Date endTime) {
-        List<Segment> segmentList = this.segmentClient.getSegmentByTimePeriod(startTime.getTime(), endTime.getTime());
+    public List<TimeSegment> getTimeSegmentsForDateDifference(Date startDate, Date endDate) {
+        List<Segment> segmentList = this.segmentClient.getSegmentByTimePeriod(startDate.getTime(), endDate.getTime());
         if (segmentList == null) {
-            segmentList = this.segmentJsonDAO.getSegmentsForTimePeriod(startTime.getTime(), endTime.getTime());
+            segmentList = this.segmentJsonDAO.getSegmentsForTimePeriod(startDate.getTime(), endDate.getTime());
         }
         Log.i("SegmentService", "List Size FROM DAO : " + segmentList.size());
-        List<TimeSegment> timeSegmentList = this.createTimeSegmentsForTimePeriod(startTime, endTime, segmentList);
+        List<TimeSegment> timeSegmentList = this.createTimeSegmentsForTimePeriod(startDate, endDate, segmentList);
         return timeSegmentList;
     }
 

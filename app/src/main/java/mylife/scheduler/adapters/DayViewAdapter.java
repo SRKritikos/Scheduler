@@ -54,7 +54,6 @@ public class DayViewAdapter extends RecyclerView.Adapter<DayViewAdapter.ViewHold
         holder.startTime.setText(timeOutput.format(timeSegment.getStartTime()));
         Log.i("DayViewAdapter", "List Size : " + timeSegment.getSegmentList().size());
         if ( !timeSegment.getSegmentList().isEmpty() ) {
-
             List<Segment> segmentList = timeSegment.getSegmentList();
             AdapterViewFlipper adapterViewFlipper = new AdapterViewFlipper(context);
             this.attachAdaptedViewFlipper(adapterViewFlipper, segmentList);
@@ -67,6 +66,7 @@ public class DayViewAdapter extends RecyclerView.Adapter<DayViewAdapter.ViewHold
         SegmentAdapter segmentAdapter = new SegmentAdapter(segmentList, context);
         adapterViewFlipper.setAdapter(segmentAdapter);
         adapterViewFlipper.setOnTouchListener(new SwipeTouchListener(context) {
+
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
@@ -97,9 +97,11 @@ public class DayViewAdapter extends RecyclerView.Adapter<DayViewAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+
         public LinearLayout segmentLayout;
         public TextView startTime;
         public TextView endTime;
+
         public ViewHolder(View view){
             super(view);
             this.startTime = (TextView) view.findViewById(R.id.startTimeText);
