@@ -2,7 +2,6 @@ package mylife.scheduler;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +22,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import mylife.scheduler.enums.Priority;
 import mylife.scheduler.services.SegmentService;
 
 public class AddSegmentView extends AppCompatActivity {
@@ -183,30 +183,44 @@ public class AddSegmentView extends AppCompatActivity {
         CheckBox checkBoxRepeat = (CheckBox) this.findViewById(R.id.checkBox);
         String title =  editTextTitle.getText().toString();
         String note = editTextNote.getText().toString();
-        boolean repeat = checkBoxRepeat.isActivated();
-        String repeatType = "";
-        if (repeat) {
-            int repeatButtonId = this.repeatRadio.getCheckedRadioButtonId();
-            RadioButton repeatRadioButtonClicked = (RadioButton) this.findViewById(repeatButtonId);
-            repeatType = repeatRadioButtonClicked.getText().toString();
-        }
+        boolean isRepeated = checkBoxRepeat.isActivated();
+        String repeatType = this.determineRepeatType(isRepeated);
         String startDate = this.startDateView.getText().toString();
         String endDate = this.endDateView.getText().toString();
         String startTime = this.startTimeView.getText().toString();
         String endTime = this.endTimeView.getText().toString();
+
         SimpleDateFormat sdfDateTime = new SimpleDateFormat("dd/MM/yyHH:mm");
         try {
             Log.i("AddSegmentView", startDate+startTime);
             Log.i("AddSegmentView", endDate+endTime);
             Date startDateTime = sdfDateTime.parse(startDate+startTime);
             Date endDateTime = sdfDateTime.parse(endDate+endTime);
-            this.segmentService.addNewSegment(startDateTime, endDateTime, title, note, 1, repeat, repeatType);
-//            Intent intent = new Intent(this, DayView.class);
+            Priority prioritySelected = this.getPrioritySelected();
+            int priority = this.segmentService.getPriorityForNewSegment(startDateTime, endDateTime, prioritySelected);
+            this.segmentService.addNewSegment(startDateTime, endDateTime, title, note, priority, isRepeated, repeatType);
             this.finish();
-//            this.startActivity(intent);
         } catch (ParseException e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to create segment", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private String determineRepeatType(boolean repeat) {
+        String repeatType = "";
+        if (repeat) {
+            int repeatButtonId = this.repeatRadio.getCheckedRadioButtonId();
+            RadioButton repeatRadioButtonClicked = (RadioButton) this.findViewById(repeatButtonId);
+            repeatType = repeatRadioButtonClicked.getText().toString();
+        }
+        return repeatType;
+    }
+
+    private Priority getPrioritySelected() {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.priorityRadioGroup);
+        int priorityButtonId = radioGroup.getCheckedRadioButtonId();
+        RadioButton radioButton = (RadioButton) findViewById(priorityButtonId);
+        String priorityButtonText = radioButton.getTag().toString();
+        return Priority.valueOf(priorityButtonText);
     }
 }

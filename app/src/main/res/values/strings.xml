@@ -8,4 +8,7 @@
     <string name="radio_label_weekly">Weekly</string>
     <string name="radio_label_monthly">Monthly</string>
     <string name="save_button_text">SAVE</string>
+    <string name="low_priority_tag">LOW</string>
+    <string name="med_priority_tag">MEDIUM</string>
+    <string name="high_priority_tag">HIGH</string>
 </resources>

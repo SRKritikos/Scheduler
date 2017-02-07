@@ -14,4 +14,7 @@ public interface ISegmentJsonDAO {
     public List<Segment> getSegments();
     public List<Segment> getSegmentsForTimePeriod(long startTime, long endTime);
     public boolean addSegment(Segment segment);
+    public boolean updateSegment(Segment segment);
+    public boolean updateSegments(List<Segment> segments);
+
 }

@@ -21,7 +21,7 @@ import mylife.scheduler.model.Segment;
 public class SegmentAdapter extends BaseAdapter {
     private List<Segment> segmentList;
     private Context context;
-    int[] colors = {Color.GREEN, Color.BLUE, Color.RED};
+    int[] colors = {Color.BLUE, Color.RED, Color.DKGRAY, Color.MAGENTA};
 
     public SegmentAdapter(List<Segment> segmentList, Context context) {
         Log.i("SegmentAdapter", "List Size : " + segmentList.size());
@@ -36,7 +36,7 @@ public class SegmentAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return segmentList.get(position);
     }
 
     @Override
@@ -48,9 +48,8 @@ public class SegmentAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(this.context);
         Segment segment = this.segmentList.get(position);
-        //parent.setBackgroundColor( colors[segment.getPriority()] );
         View segmentView = layoutInflater.inflate(R.layout.segment_layout, parent, false);
-        segmentView.setBackgroundColor( colors[segment.getPriority()] );
+        segmentView.setBackgroundColor( colors[segment.getPriority() - 1] );
         TextView titleText = (TextView) segmentView.findViewById(R.id.titleText);
         TextView noteText = (TextView) segmentView.findViewById(R.id.noteText);
         Log.i("SegmentAdapter", segment.getTitle() + ", " + segmentList.get(position).getDescription());
@@ -58,6 +57,4 @@ public class SegmentAdapter extends BaseAdapter {
         noteText.setText(segment.getDescription());
         return segmentView;
     }
-
-
 }

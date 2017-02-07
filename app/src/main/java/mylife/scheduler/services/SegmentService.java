@@ -11,10 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import mylife.scheduler.apiclient.ISegmentClient;
 import mylife.scheduler.apiclient.SegmentClient;
 import mylife.scheduler.data.ISegmentJsonDAO;
-import mylife.scheduler.data.SegmentJsonDAO;
+import mylife.scheduler.enums.Priority;
 import mylife.scheduler.model.Segment;
 import mylife.scheduler.model.TimeSegment;
 
@@ -59,8 +58,9 @@ public class SegmentService implements ISegmentService{
     private TimeSegment createTimeSegment(DateTime startDateTime, DateTime endDateTime, List<Segment> segmentList) {
         TimeSegment timeSegment = new TimeSegment(startDateTime.toDate(), endDateTime.toDate());
         for (Segment segment : segmentList) {
-            if (startDateTime.toDate().after(segment.getStartTime())
-                    && startDateTime.toDate().before(segment.getEndTime())) {
+            if (( startDateTime.toDate().after(segment.getStartTime())
+                    && startDateTime.toDate().before(segment.getEndTime()) )
+                    || startDateTime.toDate().equals(segment.getStartTime()) ) {
                 timeSegment.addSegment(segment);
             }
         }
@@ -91,5 +91,53 @@ public class SegmentService implements ISegmentService{
         Segment newSegment = new Segment(startTime, endTime, title, description, segmentId, priority);
         result = this.segmentJsonDAO.addSegment(newSegment);
         return result;
+    }
+
+    @Override
+    public int getPriorityForNewSegment(Date startDate, Date endDate, Priority priority) {
+        List<Segment> segmentList = this.segmentJsonDAO.getSegmentsForTimePeriod(startDate.getTime(), endDate.getTime());
+        int segmentPriority = 0;
+        if (segmentList.isEmpty()) {
+            segmentPriority = 1;
+        } else {
+            this.sortSegmentsByPriority(segmentList);
+            switch (priority) {
+                case HIGH:
+                    segmentPriority = this.determineHighPriority(segmentList);
+                    break;
+                case MEDIUM:
+                    segmentPriority = this.determineMediumPriority(segmentList);
+                    break;
+                case LOW:
+                    int lastPriority = segmentList.get(segmentList.size() - 1).getPriority();
+                    segmentPriority = lastPriority + 1;
+                    break;
+            }
+        }
+        return segmentPriority;
+    }
+
+    private int determineMediumPriority(List<Segment> segmentList) {
+        int priority = 1;
+        if (!segmentList.isEmpty()) {
+            int position = (int) Math.floor(segmentList.size() / 2);
+            List<Segment> segmentsPastPosition = segmentList.subList(position, segmentList.size());
+            this.incrementSegmentsPriority(segmentsPastPosition);
+            this.segmentJsonDAO.updateSegments(segmentsPastPosition);
+            priority = position + 1;
+        }
+        return priority;
+    }
+
+    private int determineHighPriority(List<Segment> segmentList) {
+        this.incrementSegmentsPriority(segmentList);
+        this.segmentJsonDAO.updateSegments(segmentList);
+        return 1;
+    }
+
+    private void incrementSegmentsPriority(List<Segment> segmentList) {
+        for (Segment segment : segmentList) {
+            segment.setPriority( segment.getPriority() + 1 );
+        }
     }
 }

@@ -63,4 +63,31 @@ public class SegmentJsonSharedPrefs implements ISegmentJsonDAO {
         this.saveSegments(segmentList);
         return true;
     }
+
+    @Override
+    public boolean updateSegment(Segment segment) {
+        boolean isUpdated = false;
+        List<Segment> allSegments = this.getSegments();
+        int segmentIndex = allSegments.indexOf(segment);
+        if (segmentIndex != -1) {
+            allSegments.set(segmentIndex, segment);
+            this.saveSegments(allSegments);
+            isUpdated = true;
+        }
+        return isUpdated;
+    }
+
+    @Override
+    public boolean updateSegments(List<Segment> segments) {
+        boolean isUpdated = false;
+        for (Segment segment : segments) {
+            isUpdated = this.updateSegment(segment);
+            if (!isUpdated) {
+                break;
+            }
+        }
+        return isUpdated;
+    }
+
+
 }

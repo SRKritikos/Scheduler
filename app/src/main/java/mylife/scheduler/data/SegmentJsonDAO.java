@@ -73,4 +73,14 @@ public class SegmentJsonDAO implements ISegmentJsonDAO {
         this.saveSegments(segmentList);
         return true;
     }
+
+    @Override
+    public boolean updateSegment(Segment segment) {
+        return false;
+    }
+
+    @Override
+    public boolean updateSegments(List<Segment> segments) {
+        return false;
+    }
 }

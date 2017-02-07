@@ -61,7 +61,7 @@ public class DayView extends AppCompatActivity {
 
     private void updateActionBar(long time) {
         ActionBar actionBar = this.getSupportActionBar();
-        DateFormat dateFormat = new SimpleDateFormat("E dd, MMM yy");
+        DateFormat dateFormat = new SimpleDateFormat("E dd MM yy");
         Date date = this.getDateFromLongTime(time);
         actionBar.setTitle( dateFormat.format(date) );
     }

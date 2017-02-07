@@ -10,43 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="mylife.scheduler.AddSegmentView">
 
-    <TextView
-        android:text="Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/txtOutTitle" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text=""
         android:ems="10"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/txtInTitle"
-        android:layout_alignBottom="@+id/txtOutTitle" />
-
-    <TextView
-        android:text="@string/note_label_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtOutTitle"
-        android:layout_alignParentStart="true"
-        android:id="@+id/txtOutDesc" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:text=""
-        android:ems="10"
-        android:layout_below="@+id/txtInTitle"
-        android:layout_alignEnd="@+id/txtInTitle"
-        android:id="@+id/txtInNote"
-        android:layout_alignBottom="@+id/txtOutDesc" />
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:text="TextView"
@@ -151,21 +123,53 @@
             android:layout_height="wrap_content"
             android:text="High Priority"
             android:checked="true"
-            android:id="@+id/highPriorityRadio"/>
+            android:id="@+id/highPriorityRadio"
+            android:tag="@string/high_priority_tag"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mediumPriorityRadio"
-            android:text="Medium Priority" />
+            android:text="Medium Priority"
+            android:tag="@string/med_priority_tag"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lowPriorityRadio"
-            android:text="Low Priority" />
+            android:text="Low Priority"
+            android:tag="@string/low_priority_tag"/>
 
     </RadioGroup>
+
+    <TextView
+        android:text="@string/note_label_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtOutDesc"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/txtInTitle"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/txtInNote"
+        android:layout_alignBaseline="@+id/txtOutDesc"
+        android:layout_alignBottom="@+id/txtOutDesc"
+        android:layout_alignStart="@+id/txtInTitle" />
+
+    <TextView
+        android:text="Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtOutTitle"
+        android:layout_alignBaseline="@+id/txtInTitle"
+        android:layout_alignBottom="@+id/txtInTitle"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
