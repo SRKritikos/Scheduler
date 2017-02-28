@@ -31,7 +31,7 @@ public class DayViewAdapter extends RecyclerView.Adapter<DayViewAdapter.ViewHold
 
     private List<TimeSegment> timeSegmentList;
     private Context context;
-    private static final DateFormat timeOutput = new SimpleDateFormat("HH:mm");
+    private static final DateFormat timeOutput = new SimpleDateFormat("kk:mm");
 
 
     public DayViewAdapter(List<TimeSegment> timeSegmentList, Context context) {

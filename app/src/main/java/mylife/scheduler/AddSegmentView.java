@@ -192,12 +192,11 @@ public class AddSegmentView extends AppCompatActivity {
 
         SimpleDateFormat sdfDateTime = new SimpleDateFormat("dd/MM/yyHH:mm");
         try {
-            Log.i("AddSegmentView", startDate+startTime);
-            Log.i("AddSegmentView", endDate+endTime);
             Date startDateTime = sdfDateTime.parse(startDate+startTime);
             Date endDateTime = sdfDateTime.parse(endDate+endTime);
             Priority prioritySelected = this.getPrioritySelected();
             int priority = this.segmentService.getPriorityForNewSegment(startDateTime, endDateTime, prioritySelected);
+            Log.i("AddSegmentView", "PRIORITY BEING INSERTED = " + priority);
             this.segmentService.addNewSegment(startDateTime, endDateTime, title, note, priority, isRepeated, repeatType);
             this.finish();
         } catch (ParseException e) {

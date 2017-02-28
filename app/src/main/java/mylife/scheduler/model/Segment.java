@@ -14,14 +14,19 @@ public class Segment {
     private String description;
     private String segmentId;
     private int priority;
+    private boolean isRepeated;
+    private String repeatType;
 
-    public Segment(Date startTime, Date endTime, String title, String description, String segmentId, int priority) {
+    public Segment(Date startTime, Date endTime, String title, String description, String segmentId,
+                   int priority, boolean isRepeated, String repeatType) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.title = title;
         this.description = description;
         this.segmentId = segmentId;
         this.priority = priority;
+        this.isRepeated = isRepeated;
+        this.repeatType = repeatType;
     }
 
     public Date getStartTime() {
@@ -70,6 +75,22 @@ public class Segment {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public boolean isRepeated() {
+        return isRepeated;
+    }
+
+    public void setRepeated(boolean repeated) {
+        isRepeated = repeated;
+    }
+
+    public String getRepeatType() {
+        return repeatType;
+    }
+
+    public void setRepeatType(String repeatType) {
+        this.repeatType = repeatType;
     }
 
     @Override

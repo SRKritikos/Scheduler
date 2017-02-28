@@ -39,16 +39,16 @@ public class SegmentServiceTest {
         startDate.setTime(new Date());
         endDate.setTime(new Date());
         endDate.add(Calendar.HOUR, 1);
-        Segment segment1 = new Segment(startDate.getTime(), endDate.getTime(), "Title1", "Description1", "1", 1);
+        Segment segment1 = new Segment(startDate.getTime(), endDate.getTime(), "Title1", "Description1", "1", 1, true, "Monthly");
         startDate.add(Calendar.MINUTE, 20);
         endDate.add(Calendar.MINUTE, 20);
-        Segment segment2 = new Segment(startDate.getTime(), endDate.getTime(), "Title2", "Description2", "2", 2);
+        Segment segment2 = new Segment(startDate.getTime(), endDate.getTime(), "Title2", "Description2", "2", 2, true, "Weekly");
         startDate.add(Calendar.HOUR, 25);
         endDate.add(Calendar.HOUR, 26);
-        Segment segment3 = new Segment(startDate.getTime(), endDate.getTime(), "Title3", "Description3", "3", 2);
+        Segment segment3 = new Segment(startDate.getTime(), endDate.getTime(), "Title3", "Description3", "3", 2, true, "Daily");
         startDate.add(Calendar.HOUR, 1);
         endDate.add(Calendar.HOUR, 1);
-        Segment segment4 = new Segment(startDate.getTime(), endDate.getTime(), "Title4", "Description4", "4", 1);
+        Segment segment4 = new Segment(startDate.getTime(), endDate.getTime(), "Title4", "Description4", "4", 1, false, "");
         List<Segment> segmentList = Arrays.asList(segment1, segment2, segment3, segment4);
         return segmentList;
     }
@@ -87,8 +87,8 @@ public class SegmentServiceTest {
 
     @Test
     public void itSortsSegmentsByPriority() {
-        Segment segment1 = new Segment(null, null, null, null, null, 2);
-        Segment segment2 = new Segment(null, null, null, null, null, 1);
+        Segment segment1 = new Segment(null, null, null, null, null, 2, false, "");
+        Segment segment2 = new Segment(null, null, null, null, null, 1, false, "");
         List<Segment> result = Arrays.asList(segment1, segment2);
         this.instance.sortSegmentsByPriority(result);
         assertTrue(result.get(0).getPriority() < result.get(1).getPriority());

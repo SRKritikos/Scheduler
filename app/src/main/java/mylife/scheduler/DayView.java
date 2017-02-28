@@ -91,6 +91,7 @@ public class DayView extends AppCompatActivity {
         startCalendar.set(Calendar.MINUTE, 0);
         startCalendar.set(Calendar.SECOND, 0);
         startCalendar.set(Calendar.MILLISECOND, 0);
+        startCalendar.set(Calendar.HOUR_OF_DAY, 5);
         return startCalendar.getTime();
     }
 
@@ -101,7 +102,7 @@ public class DayView extends AppCompatActivity {
         endCalendar.set(Calendar.MINUTE, 0);
         endCalendar.set(Calendar.SECOND, 0);
         endCalendar.set(Calendar.MILLISECOND, 0);
-        endCalendar.set(Calendar.HOUR, 0);
+        endCalendar.set(Calendar.HOUR_OF_DAY, 0);
         return endCalendar.getTime();
     }
 }

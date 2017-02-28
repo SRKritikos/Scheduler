@@ -49,7 +49,8 @@ public class SegmentJsonSharedPrefs implements ISegmentJsonDAO {
         Date endDate =  new Date(endTime);
         List<Segment> segmentList = new ArrayList<>();
         for (Segment segment : allSegments) {
-            if (segment.getStartTime().after(startDate) && segment.getStartTime().before(endDate)) {
+            if (( segment.getStartTime().after(startDate) && segment.getStartTime().before(endDate) )
+                    || ( segment.getEndTime().after(startDate) && segment.getEndTime().before(endDate) )) {
                 segmentList.add(segment);
             }
         }

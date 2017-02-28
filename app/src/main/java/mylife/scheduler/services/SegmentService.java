@@ -83,20 +83,21 @@ public class SegmentService implements ISegmentService{
         });
     }
 
-
     @Override
     public boolean addNewSegment(Date startTime, Date endTime, String title, String description, int priority, boolean repeat, String repeatType) {
         boolean result;
         String segmentId = UUID.randomUUID().toString();
-        Segment newSegment = new Segment(startTime, endTime, title, description, segmentId, priority);
+        Segment newSegment = new Segment(startTime, endTime, title, description, segmentId, priority, repeat, repeatType);
         result = this.segmentJsonDAO.addSegment(newSegment);
         return result;
     }
 
     @Override
     public int getPriorityForNewSegment(Date startDate, Date endDate, Priority priority) {
+        Log.i("SegmentService", startDate.toString() + " " + endDate.toString());
         List<Segment> segmentList = this.segmentJsonDAO.getSegmentsForTimePeriod(startDate.getTime(), endDate.getTime());
         int segmentPriority = 0;
+        Log.i("SegmentService", "SegmentList empty " + segmentList.isEmpty());
         if (segmentList.isEmpty()) {
             segmentPriority = 1;
         } else {

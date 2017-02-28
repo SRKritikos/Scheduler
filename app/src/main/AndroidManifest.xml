@@ -8,15 +8,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat"
-        android:debuggable="true">
-        <activity android:name=".CalendarView"></activity>
-        <activity android:name=".DayView">
+        android:theme="@style/Theme.AppCompat">
+        <activity android:name=".CalendarViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DayView"
+            android:parentActivityName=".CalendarViewActivity"></activity>
         <activity android:name=".AddSegmentView"
             android:parentActivityName=".DayView"></activity>
     </application>

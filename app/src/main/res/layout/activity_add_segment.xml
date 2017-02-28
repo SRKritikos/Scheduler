@@ -59,20 +59,17 @@
         android:orientation="horizontal"
         android:id="@+id/repeatTypeRadio">
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/radio_label_daily"
             style="@style/repeatRadioButton"
             android:id="@+id/radioRepeatDaily"/>
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/radio_label_weekly"
             style="@style/repeatRadioButton"
             android:id="@+id/radioRepeatWeekly"/>
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/radio_label_monthly"
             style="@style/repeatRadioButton"
             android:id="@+id/radioRepeatMonthly"/>
@@ -98,16 +95,6 @@
         android:layout_alignBottom="@+id/txtStartDate"
         android:layout_alignStart="@+id/txtEndTime" />
 
-
-    <Button
-        android:text="@string/save_button_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/button"
-        android:layout_toEndOf="@+id/txtEndTime"
-        android:onClick="saveSegment"/>
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -170,6 +157,15 @@
         android:layout_alignBaseline="@+id/txtInTitle"
         android:layout_alignBottom="@+id/txtInTitle"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/save_button_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:onClick="saveSegment"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>
